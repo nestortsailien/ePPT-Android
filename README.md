@@ -1,5 +1,7 @@
-# ePPT Android 離線閱讀器
+# ePPT HTML5 Android
 
-將根目錄的 `ePPT.pptx` 在 GitHub Actions 轉為投影片圖片並編譯成 Android APK。藍色圖示，橫向全螢幕、左右滑動翻頁、離線使用。
+使用原始 iSpring HTML5 包 `ePPT.zip`，保留其中的中文字型、SVG、圖片及 JavaScript。
 
-請先透過 GitHub 的 Add file → Upload files 上傳 `ePPT.pptx` 至 Repository 根目錄。完成後到 Actions → Build ePPT APK → Run workflow。編譯成功後從 Artifacts 下載 `ePPT-apk`，解壓取得 `app-debug.apk`，可重新命名 `ePPT.apk`。
+將 `ePPT.zip` 上傳至 Repository 根目錄後，GitHub Actions 會自動解壓並編譯 APK。下載 Actions Artifacts 中的 `ePPT-HTML5-apk` 即可取得 `app-debug.apk`。
+
+舊版 ePPT.pptx 不再用於編譯。
