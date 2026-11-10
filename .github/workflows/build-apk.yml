@@ -23,18 +23,16 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Convert PowerPoint to slide images
+      - name: Extract original HTML5 presentation
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y libreoffice-impress poppler-utils
-          mkdir -p app/src/main/assets/slides /tmp/eppt_render
-          timeout 600 libreoffice -env:UserInstallation=file:///tmp/lo_eppt_ci --headless --convert-to pdf --outdir /tmp/eppt_render ePPT.pptx
-          test -s /tmp/eppt_render/ePPT.pdf
-          pdftoppm -jpeg -r 120 -jpegopt quality=85 /tmp/eppt_render/ePPT.pdf app/src/main/assets/slides/slide
-          test "$(find app/src/main/assets/slides -name '*.jpg' | wc -l)" -gt 0
+          test -s ePPT.zip
+          mkdir -p app/src/main/assets/site
+          unzip -q ePPT.zip -d app/src/main/assets/site
+          test -s app/src/main/assets/site/ePPT/index.html
+          test -d app/src/main/assets/site/ePPT/data
       - name: Build APK
         run: gradle --no-daemon assembleDebug
       - uses: actions/upload-artifact@v4
         with:
-          name: ePPT-apk
+          name: ePPT-HTML5-apk
           path: app/build/outputs/apk/debug/app-debug.apk
